@@ -1,8 +1,22 @@
 name: Shell Commands
 
-on: [pull_request]
-
+on: 
+  push:
+    branches:
+        - main
+  pull_request:
+    branches:
+        - main
+  repository_dispatch:
+        types: [my-event]
 jobs:
+  myEvent:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.client_payload.ref }}
+      - run: echo ${{ github.event.client_payload.sha }}
   run-shell-command: 
     runs-on: ubuntu-latest
     steps:
