@@ -8,15 +8,15 @@ on:
     branches:
         - main
   repository_dispatch:
-        types: [my-event]
+        types: [update]
 jobs:
-  myEvent:
+  update:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.client_payload.ref }}
-      - run: echo ${{ github.event.client_payload.sha }}
+      - run: | 
+          echo ${{ github.event.client_payload.soaplib_version }}
+          echo ${{ github.event.client_payload.restlib_version }}
   run-shell-command: 
     runs-on: ubuntu-latest
     steps:
